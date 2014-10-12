@@ -32,13 +32,21 @@ int main(int argc, const char * argv[]) {
             for (int j = 0; j < [boardSize integerValue]; j++) {
                 NSMutableArray *row = [[NSMutableArray alloc] init];
                 for (int i = 0; i < [boardSize integerValue]; i++) {
-                    
-                    [row addObject:[[Square alloc] init]];
+                    Square *square = [[Square alloc] init];
+                    [row addObject:square];
                 }
                 [board addObject:row];
             }
             
-            NSLog(@"%@",[[board objectAtIndex:0] objectAtIndex:0]);
+            NSLog(@"%@", board);
+            
+            Square *square = [[board objectAtIndex:0] objectAtIndex:0];
+            player1.currentSquare = square;
+            NSLog(@"%@", player1.currentSquare);
+            Square *nextSquare = [[board objectAtIndex:0] objectAtIndex:1];
+            player1.currentSquare = nextSquare;
+            NSLog(@"%@", player1.currentSquare);
+            
             
             NSLog(@"Please enter your difficulty (Easy, Medium, or Hard):");
             scanf("%100s", diff);

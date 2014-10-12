@@ -8,7 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class Square;
 @interface Player : NSObject
+
+@property (nonatomic, strong) Square *currentSquare;
 
 
 -(void)movePlayer:(int)moves;
