@@ -26,22 +26,14 @@ int main(int argc, const char * argv[]) {
             NSString *boardSize = [[NSString alloc] initWithUTF8String: size];
             NSLog(@"%i", [boardSize integerValue]);
             
-            
-            NSMutableArray *board = [[NSMutableArray alloc] init];
-            
-            for (int j = 0; j < [boardSize integerValue]; j++) {
-                NSMutableArray *row = [[NSMutableArray alloc] init];
-                for (int i = 0; i < [boardSize integerValue]; i++) {
-                    Square *square = [[Square alloc] init];
-                    [row addObject:square];
-                }
-                [board addObject:row];
-            }
+            // Take integer boardSize and make grid
+            NSMutableArray *board = [Square initializeBoard:boardSize];
             
             NSLog(@"%@", board);
             
-            Square *square = [[board objectAtIndex:0] objectAtIndex:0];
-            player1.currentSquare = square;
+            Square *startingSquare = [[board objectAtIndex:0] objectAtIndex:0];
+            player1.currentSquare = startingSquare;
+            player2.currentSquare = startingSquare;
             NSLog(@"%@", player1.currentSquare);
             Square *nextSquare = [[board objectAtIndex:0] objectAtIndex:1];
             player1.currentSquare = nextSquare;
@@ -54,6 +46,8 @@ int main(int argc, const char * argv[]) {
             
             if ([response isEqualToString:@"Easy"]) {
                 NSLog(@"You have choosen Easy mode");
+                
+                
                 
               
             }
@@ -78,4 +72,8 @@ int main(int argc, const char * argv[]) {
         }
     }
     return 0;
+    
+    
+    
 }
+

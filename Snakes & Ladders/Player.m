@@ -10,8 +10,15 @@
 
 @implementation Player
 
--(void)movePlayer:(int)moves {
+-(Square *)movePlayer:(Player *)player withNumberOfTurns:(int)moves andBoardSize:(int)boardSize {
     
+    if (moves > boardSize) {
+        
+        
+    }
+    
+    
+    return player.currentSquare;
 }
 
 @end

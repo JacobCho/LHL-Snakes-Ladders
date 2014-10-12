@@ -16,4 +16,6 @@
 @property (nonatomic, strong) NSString *name;
 
 
++(NSMutableArray *)initializeBoard:(NSString *)boardSize;
+
 @end

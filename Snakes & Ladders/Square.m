@@ -10,4 +10,21 @@
 
 @implementation Square
 
++(NSMutableArray *)initializeBoard:(NSString *)boardSize {
+    
+    NSMutableArray *board = [[NSMutableArray alloc] init];
+    
+    for (int j = 0; j < [boardSize integerValue]; j++) {
+        NSMutableArray *row = [[NSMutableArray alloc] init];
+        for (int i = 0; i < [boardSize integerValue]; i++) {
+            Square *square = [[Square alloc] init];
+            [row addObject:square];
+        }
+        [board addObject:row];
+    }
+    
+    return board;
+    
+}
+
 @end
