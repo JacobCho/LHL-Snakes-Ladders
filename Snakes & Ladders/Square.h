@@ -17,5 +17,6 @@
 
 
 +(NSMutableArray *)initializeBoard:(NSString *)boardSize;
++(void)initializePointers:(NSString *)boardSize withBoard:(NSMutableArray *)board;
 
 @end

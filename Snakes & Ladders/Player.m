@@ -7,16 +7,20 @@
 //
 
 #import "Player.h"
+#import "Square.h"
 
 @implementation Player
 
--(Square *)movePlayer:(Player *)player withNumberOfTurns:(int)moves andBoardSize:(int)boardSize {
+-(Square *)movePlayer:(Player *)player withNumberOfTurns:(int)moves andBoardSize:(NSString *)boardSize {
     
-    if (moves > boardSize) {
+     NSMutableArray *board = [Square initializeBoard:boardSize];
+    
+    while (moves > 0) {
         
+        player.currentSquare = player.currentSquare.next;
+        moves--;
         
     }
-    
     
     return player.currentSquare;
 }

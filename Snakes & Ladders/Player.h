@@ -14,6 +14,6 @@
 @property (nonatomic, strong) Square *currentSquare;
 
 
--(Square *)movePlayer:(Player *)player withNumberOfTurns:(int)moves andBoardSize:(int)boardSize;
+-(Square *)movePlayer:(Player *)player withNumberOfTurns:(int)moves andBoardSize:(NSString *)boardSize;
 
 @end

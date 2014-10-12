@@ -31,22 +31,39 @@ int main(int argc, const char * argv[]) {
             
             NSLog(@"%@", board);
             
+            // Total number of squares on the grid
+            NSInteger *totalSquares = [boardSize integerValue] * [boardSize integerValue];
+            NSLog(@"%i", totalSquares);
+            
             Square *startingSquare = [[board objectAtIndex:0] objectAtIndex:0];
             player1.currentSquare = startingSquare;
             player2.currentSquare = startingSquare;
-            NSLog(@"%@", player1.currentSquare);
-            Square *nextSquare = [[board objectAtIndex:0] objectAtIndex:1];
-            player1.currentSquare = nextSquare;
-            NSLog(@"%@", player1.currentSquare);
+            NSLog(@"Square 1: %@", player1.currentSquare);
+            NSLog(@"Square 2: %@", player1.currentSquare.next);
+            NSLog(@"Square 3: %@", player1.currentSquare.next.next);
+            NSLog(@"Square 4: %@", player1.currentSquare.next.next.next);
+            NSLog(@"Square 5: %@", player1.currentSquare.next.next.next.next);
+            NSLog(@"Square 6: %@", player1.currentSquare.next.next.next.next.next);
+            NSLog(@"Square 7: %@", player1.currentSquare.next.next.next.next.next.next);
+            NSLog(@"Square 8: %@", player1.currentSquare.next.next.next.next.next.next.next);
+            
+            [player1 movePlayer:player1 withNumberOfTurns:9 andBoardSize:boardSize];
+            NSLog(@"I'm now at: %@", player1.currentSquare);
             
             
             NSLog(@"Please enter your difficulty (Easy, Medium, or Hard):");
             scanf("%100s", diff);
             NSString *response = [[NSString alloc] initWithUTF8String: diff];
+
             
             if ([response isEqualToString:@"Easy"]) {
                 NSLog(@"You have choosen Easy mode");
                 
+                NSInteger *ladders = (int)totalSquares / 3;
+                NSLog(@"%i ladders", ladders);
+                
+                NSInteger *snakes = (int)totalSquares / 5;
+                NSLog(@"%i snakes", snakes);
                 
                 
               
@@ -55,13 +72,22 @@ int main(int argc, const char * argv[]) {
             else if ([response isEqualToString:@"Medium"]) {
                 NSLog(@"You have choosen Medium mode");
                 
+                NSInteger *ladders = (int)totalSquares / 4;
+                NSLog(@"%i ladders", ladders);
                 
+                NSInteger *snakes = (int)totalSquares / 4;
+                NSLog(@"%i snakes", snakes);
                 
             }
             
             else if ([response isEqualToString:@"Hard"]) {
                 NSLog(@"You have choosen Hard mode");
                 
+                NSInteger *ladders = (int)totalSquares / 5;
+                NSLog(@"%i ladders", ladders);
+                
+                NSInteger *snakes = (int)totalSquares / 2;
+                NSLog(@"%i snakes", snakes);
                 
             }
             
