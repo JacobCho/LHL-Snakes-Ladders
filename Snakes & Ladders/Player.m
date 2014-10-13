@@ -13,16 +13,17 @@
 
 -(Square *)movePlayer:(Player *)player withNumberOfTurns:(int)moves andBoardSize:(NSString *)boardSize {
     
-     NSMutableArray *board = [Square initializeBoard:boardSize];
-    
     while (moves > 0) {
         
         player.currentSquare = player.currentSquare.next;
+        
         moves--;
         
     }
-    
+
+    NSLog(@"You are now at square: %@", player.currentSquare.name);
     return player.currentSquare;
 }
+
 
 @end

@@ -21,35 +21,23 @@ int main(int argc, const char * argv[]) {
         
         while (YES) {
             
-            NSLog(@"Please enter your board size:");
+            NSLog(@"Please enter your column and row length:");
             scanf("%100s",size);
             NSString *boardSize = [[NSString alloc] initWithUTF8String: size];
-            NSLog(@"%i", [boardSize integerValue]);
             
             // Take integer boardSize and make grid
             NSMutableArray *board = [Square initializeBoard:boardSize];
             
-            NSLog(@"%@", board);
+//            NSLog(@"%@", board);
             
             // Total number of squares on the grid
             NSInteger *totalSquares = [boardSize integerValue] * [boardSize integerValue];
-            NSLog(@"%i", totalSquares);
+            NSLog(@"Your grid now has %i total squares", totalSquares);
+
             
             Square *startingSquare = [[board objectAtIndex:0] objectAtIndex:0];
             player1.currentSquare = startingSquare;
             player2.currentSquare = startingSquare;
-            NSLog(@"Square 1: %@", player1.currentSquare);
-            NSLog(@"Square 2: %@", player1.currentSquare.next);
-            NSLog(@"Square 3: %@", player1.currentSquare.next.next);
-            NSLog(@"Square 4: %@", player1.currentSquare.next.next.next);
-            NSLog(@"Square 5: %@", player1.currentSquare.next.next.next.next);
-            NSLog(@"Square 6: %@", player1.currentSquare.next.next.next.next.next);
-            NSLog(@"Square 7: %@", player1.currentSquare.next.next.next.next.next.next);
-            NSLog(@"Square 8: %@", player1.currentSquare.next.next.next.next.next.next.next);
-            
-            [player1 movePlayer:player1 withNumberOfTurns:9 andBoardSize:boardSize];
-            NSLog(@"I'm now at: %@", player1.currentSquare);
-            
             
             NSLog(@"Please enter your difficulty (Easy, Medium, or Hard):");
             scanf("%100s", diff);
@@ -59,35 +47,218 @@ int main(int argc, const char * argv[]) {
             if ([response isEqualToString:@"Easy"]) {
                 NSLog(@"You have choosen Easy mode");
                 
-                NSInteger *ladders = (int)totalSquares / 3;
+                NSInteger *ladders = (int)totalSquares / 5;
                 NSLog(@"%i ladders", ladders);
                 
-                NSInteger *snakes = (int)totalSquares / 5;
+                [Square setLadders:ladders withBoard:board withRowSize:boardSize];
+                
+                NSInteger *snakes = (int)totalSquares / 7;
                 NSLog(@"%i snakes", snakes);
                 
+                [Square setSnakes:snakes withBoard:board withRowSize:boardSize];
                 
+                while (YES) {
+                    
+                    Square *finalSquare = [[board objectAtIndex:[boardSize integerValue] -1] objectAtIndex:[boardSize integerValue] -1];
+                    char move [100];
+                    NSLog(@"Player 1: Please enter your move:");
+                    scanf("%100s", move);
+                    NSString *player1Move = [[NSString alloc] initWithUTF8String: move];
+                    int moves = [player1Move integerValue];
+                    
+                    [player1 movePlayer:player1 withNumberOfTurns:moves andBoardSize:boardSize];
+                    
+                    if(player1.currentSquare.hasLadder) {
+                        NSLog(@"You hit a ladder! Go up %i squares!", (int)[boardSize integerValue]);
+                        player1.currentSquare = [player1.currentSquare hitLadder:player1 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player1.currentSquare.name);
+                    }
+                    
+                    if (player1.currentSquare.hasSnake) {
+                        NSLog(@"You hit a snake! Go down %i squares!", (int)[boardSize integerValue]);
+                        player1.currentSquare = [player1.currentSquare hitSnake:player1 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player1.currentSquare.name);
+                    }
+
+                    
+                    if (player1.currentSquare == finalSquare) {
+                        NSLog(@"Player 1 wins!");
+                        NSLog(@"Game Over!");
+                        break;
+                    }
+                    
+                    
+                    NSLog(@"Player 2: Please enter your move:");
+                    
+                    scanf("%100s", move);
+                    NSString *player2Move = [[NSString alloc] initWithUTF8String: move];
+                    moves = [player2Move integerValue];
+                    
+                    [player2 movePlayer:player2 withNumberOfTurns:moves andBoardSize:boardSize];
+                    
+                    if(player2.currentSquare.hasLadder) {
+                        NSLog(@"You hit a ladder! Go up %i squares!", (int)[boardSize integerValue]);
+                        player2.currentSquare = [player2.currentSquare hitLadder:player2 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player2.currentSquare.name);
+                    }
+                    
+                    if (player2.currentSquare.hasSnake) {
+                        NSLog(@"You hit a snake! Go down %i squares!", (int)[boardSize integerValue]);
+                        player2.currentSquare = [player2.currentSquare hitSnake:player2 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player2.currentSquare.name);
+                    }
+                    
+                    if (player2.currentSquare == finalSquare) {
+                        NSLog(@"Player 2 wins!");
+                        NSLog(@"Game Over!");
+                        break;
+                    }
+                }
               
             }
             
             else if ([response isEqualToString:@"Medium"]) {
                 NSLog(@"You have choosen Medium mode");
                 
-                NSInteger *ladders = (int)totalSquares / 4;
+                NSInteger *ladders = (int)totalSquares / 6;
                 NSLog(@"%i ladders", ladders);
                 
-                NSInteger *snakes = (int)totalSquares / 4;
+                [Square setLadders:ladders withBoard:board withRowSize:boardSize];
+                
+                NSInteger *snakes = (int)totalSquares / 6;
                 NSLog(@"%i snakes", snakes);
                 
+                [Square setSnakes:snakes withBoard:board withRowSize:boardSize];
+                
+                while (YES) {
+                    
+                    Square *finalSquare = [[board objectAtIndex:[boardSize integerValue] -1] objectAtIndex:[boardSize integerValue] -1];
+                    char move [100];
+                    NSLog(@"Player 1: Please enter your move:");
+                    scanf("%100s", move);
+                    NSString *player1Move = [[NSString alloc] initWithUTF8String: move];
+                    int moves = [player1Move integerValue];
+                    
+                    [player1 movePlayer:player1 withNumberOfTurns:moves andBoardSize:boardSize];
+                    
+                    if(player1.currentSquare.hasLadder) {
+                        NSLog(@"You hit a ladder! Go up %i squares!", (int)[boardSize integerValue]);
+                        player1.currentSquare = [player1.currentSquare hitLadder:player1 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player1.currentSquare.name);
+                    }
+                    
+                    if (player1.currentSquare.hasSnake) {
+                        NSLog(@"You hit a snake! Go down %i squares!", (int)[boardSize integerValue]);
+                        player1.currentSquare = [player1.currentSquare hitSnake:player1 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player1.currentSquare.name);
+                    }
+                    
+                    
+                    if (player1.currentSquare == finalSquare) {
+                        NSLog(@"Player 1 wins!");
+                        NSLog(@"Game Over!");
+                        break;
+                    }
+                    
+                    
+                    NSLog(@"Player 2: Please enter your move:");
+                    
+                    scanf("%100s", move);
+                    NSString *player2Move = [[NSString alloc] initWithUTF8String: move];
+                    moves = [player2Move integerValue];
+                    
+                    [player2 movePlayer:player2 withNumberOfTurns:moves andBoardSize:boardSize];
+                    
+                    if(player2.currentSquare.hasLadder) {
+                        NSLog(@"You hit a ladder! Go up %i squares!", (int)[boardSize integerValue]);
+                        player2.currentSquare = [player2.currentSquare hitLadder:player2 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player2.currentSquare.name);
+                    }
+                    
+                    if (player2.currentSquare.hasSnake) {
+                        NSLog(@"You hit a snake! Go down %i squares!", (int)[boardSize integerValue]);
+                        player2.currentSquare = [player2.currentSquare hitSnake:player2 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player2.currentSquare.name);
+                    }
+                    
+                    if (player2.currentSquare == finalSquare) {
+                        NSLog(@"Player 2 wins!");
+                        NSLog(@"Game Over!");
+                        break;
+                    }
+                }
             }
             
             else if ([response isEqualToString:@"Hard"]) {
                 NSLog(@"You have choosen Hard mode");
                 
-                NSInteger *ladders = (int)totalSquares / 5;
+                NSInteger *ladders = (int)totalSquares / 8;
                 NSLog(@"%i ladders", ladders);
                 
-                NSInteger *snakes = (int)totalSquares / 2;
+                [Square setLadders:ladders withBoard:board withRowSize:boardSize];
+                
+                NSInteger *snakes = (int)totalSquares / 3;
                 NSLog(@"%i snakes", snakes);
+                
+                [Square setSnakes:snakes withBoard:board withRowSize:boardSize];
+                
+                while (YES) {
+                    
+                    Square *finalSquare = [[board objectAtIndex:[boardSize integerValue] -1] objectAtIndex:[boardSize integerValue] -1];
+                    char move [100];
+                    NSLog(@"Player 1: Please enter your move:");
+                    scanf("%100s", move);
+                    NSString *player1Move = [[NSString alloc] initWithUTF8String: move];
+                    int moves = [player1Move integerValue];
+                    
+                    [player1 movePlayer:player1 withNumberOfTurns:moves andBoardSize:boardSize];
+                    
+                    if(player1.currentSquare.hasLadder) {
+                        NSLog(@"You hit a ladder! Go up %i squares!", (int)[boardSize integerValue]);
+                        player1.currentSquare = [player1.currentSquare hitLadder:player1 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player1.currentSquare.name);
+                    }
+                    
+                    if (player1.currentSquare.hasSnake) {
+                        NSLog(@"You hit a snake! Go down %i squares!", (int)[boardSize integerValue]);
+                        player1.currentSquare = [player1.currentSquare hitSnake:player1 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player1.currentSquare.name);
+                    }
+                    
+                    
+                    if (player1.currentSquare == finalSquare) {
+                        NSLog(@"Player 1 wins!");
+                        NSLog(@"Game Over!");
+                        break;
+                    }
+                    
+                    
+                    NSLog(@"Player 2: Please enter your move:");
+                    
+                    scanf("%100s", move);
+                    NSString *player2Move = [[NSString alloc] initWithUTF8String: move];
+                    moves = [player2Move integerValue];
+                    
+                    [player2 movePlayer:player2 withNumberOfTurns:moves andBoardSize:boardSize];
+                    
+                    if(player2.currentSquare.hasLadder) {
+                        NSLog(@"You hit a ladder! Go up %i squares!", (int)[boardSize integerValue]);
+                        player2.currentSquare = [player2.currentSquare hitLadder:player2 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player2.currentSquare.name);
+                    }
+                    
+                    if (player2.currentSquare.hasSnake) {
+                        NSLog(@"You hit a snake! Go down %i squares!", (int)[boardSize integerValue]);
+                        player2.currentSquare = [player2.currentSquare hitSnake:player2 withRowSize:boardSize];
+                        NSLog(@"You are now at square: %@", player2.currentSquare.name);
+                    }
+                    
+                    if (player2.currentSquare == finalSquare) {
+                        NSLog(@"Player 2 wins!");
+                        NSLog(@"Game Over!");
+                        break;
+                    }
+                }
                 
             }
             
